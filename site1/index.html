@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bakery Aoi | 街の小さなベーカリー＆カフェ</title>
+<style>
+  :root{
+    --cream:#fdf8f1; --paper:#fffdf9; --ink:#3d2c1e; --sub:#7a6753;
+    --accent:#c96f2e; --accent2:#8a5a33; --line:#eee2d2; --soft:#f7ecdc;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Hiragino Sans","Noto Sans JP",sans-serif;
+    color:var(--ink); background:var(--cream); line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+  /* header */
+  header.top{
+    position:sticky;top:0;z-index:10;background:rgba(253,248,241,.92);
+    backdrop-filter:blur(6px);border-bottom:1px solid var(--line);
+  }
+  .top-in{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:19px;letter-spacing:.04em}
+  .logo svg{flex:none}
+  nav a{color:var(--ink);text-decoration:none;font-size:13.5px;margin-left:22px;font-weight:600}
+  nav a:hover{color:var(--accent)}
+  @media(max-width:680px){ nav{display:none} }
+
+  /* hero */
+  .hero{
+    background:
+      radial-gradient(700px 320px at 85% -60px, rgba(255,255,255,.55), transparent 60%),
+      linear-gradient(140deg,#f3cf9a 0%,#e8a558 48%,#cf7c34 100%);
+    color:#fff;
+  }
+  .hero-in{display:grid;grid-template-columns:1.15fr .85fr;gap:32px;align-items:center;padding:76px 0 84px}
+  .hero .kicker{font-size:12.5px;letter-spacing:.3em;font-weight:700;opacity:.92}
+  .hero h1{font-size:clamp(30px,5.4vw,50px);line-height:1.35;font-weight:800;margin:14px 0 16px;text-shadow:0 2px 10px rgba(120,60,10,.25)}
+  .hero p{font-size:15.5px;max-width:480px;text-shadow:0 1px 6px rgba(120,60,10,.25)}
+  .hero .btns{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;padding:12px 26px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;
+    background:#fff;color:var(--accent2);box-shadow:0 6px 16px rgba(120,60,10,.22);
+  }
+  .btn.ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.85);box-shadow:none}
+  .hero-art{display:flex;justify-content:center}
+  @media(max-width:820px){ .hero-in{grid-template-columns:1fr;padding:56px 0 64px} .hero-art{order:-1} }
+
+  section{padding:76px 0}
+  .sec-head{text-align:center;margin-bottom:40px}
+  .sec-head .en{font-size:11.5px;letter-spacing:.32em;color:var(--accent);font-weight:800}
+  .sec-head h2{font-size:clamp(24px,3.6vw,32px);font-weight:800;margin-top:6px}
+  .sec-head p{color:var(--sub);font-size:14.5px;margin-top:8px}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .about-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:28px 24px;text-align:center}
+  .about-card .ic{
+    width:56px;height:56px;margin:0 auto 14px;border-radius:50%;background:var(--soft);
+    display:flex;align-items:center;justify-content:center;font-size:26px;
+  }
+  .about-card h3{font-size:16.5px;margin-bottom:8px}
+  .about-card p{font-size:13.5px;color:var(--sub);text-align:left}
+  @media(max-width:820px){ .about-grid{grid-template-columns:1fr} }
+
+  /* menu */
+  .menu-sec{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 44px;max-width:820px;margin:0 auto}
+  .menu-item{display:flex;align-items:baseline;gap:10px;padding:12px 2px;border-bottom:1px dashed var(--line)}
+  .menu-item .name{font-weight:700;font-size:15.5px}
+  .menu-item .desc{color:var(--sub);font-size:12.5px;display:block;font-weight:400}
+  .menu-item .dots{flex:1;border-bottom:2px dotted #dcc7ab;transform:translateY(-4px)}
+  .menu-item .price{font-weight:800;color:var(--accent2);white-space:nowrap}
+  .menu-item .tag{font-size:10.5px;background:var(--accent);color:#fff;border-radius:999px;padding:2px 8px;font-weight:700;white-space:nowrap}
+  @media(max-width:680px){ .menu-grid{grid-template-columns:1fr} }
+  .menu-note{text-align:center;color:var(--sub);font-size:12.5px;margin-top:26px}
+
+  /* info */
+  .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:stretch}
+  .info-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:30px 28px}
+  .info-card h3{font-size:17px;margin-bottom:16px}
+  table.info{width:100%;border-collapse:collapse;font-size:14px}
+  table.info th,table.info td{padding:9px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  table.info th{width:96px;color:var(--sub);font-weight:600;white-space:nowrap}
+  table.info tr:last-child th,table.info tr:last-child td{border-bottom:none}
+  .map{
+    border-radius:18px;min-height:260px;position:relative;overflow:hidden;
+    background:
+      linear-gradient(0deg, rgba(255,255,255,.25), rgba(255,255,255,.25)),
+      repeating-linear-gradient(0deg,#e9dfcd 0 2px, transparent 2px 56px),
+      repeating-linear-gradient(90deg,#e9dfcd 0 2px, transparent 2px 56px),
+      #f3ead9;
+    border:1px solid var(--line);
+  }
+  .map .river{position:absolute;left:-10%;top:52%;width:120%;height:44px;background:#bcd7e8;transform:rotate(-6deg);border-radius:999px}
+  .map .road{position:absolute;left:46%;top:-10%;width:26px;height:120%;background:#fff;transform:rotate(8deg);box-shadow:0 0 0 1px #e2d5bd}
+  .map .pin{
+    position:absolute;left:50%;top:44%;transform:translate(-50%,-100%);
+    background:var(--accent);color:#fff;font-weight:800;font-size:13px;padding:8px 14px;border-radius:999px;
+    box-shadow:0 8px 18px rgba(150,80,20,.35);white-space:nowrap;
+  }
+  .map .pin::after{content:"";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);border:8px solid transparent;border-top-color:var(--accent);border-bottom:none}
+  .map .st{position:absolute;font-size:11.5px;color:var(--sub);background:rgba(255,253,249,.85);padding:2px 8px;border-radius:6px}
+  @media(max-width:820px){ .info-grid{grid-template-columns:1fr} }
+
+  /* contact */
+  .contact-sec{background:linear-gradient(160deg,#f7ecdc,#f3dfc2)}
+  .contact-box{max-width:640px;margin:0 auto;background:var(--paper);border-radius:20px;padding:36px 34px;box-shadow:0 14px 34px rgba(150,95,35,.14)}
+  .contact-box h2{text-align:center;font-size:24px;margin-bottom:6px}
+  .contact-box p.lead{text-align:center;color:var(--sub);font-size:13.5px;margin-bottom:24px}
+  label{display:block;font-size:13px;font-weight:700;margin:16px 0 6px}
+  input,textarea{
+    width:100%;border:1px solid var(--line);border-radius:10px;padding:11px 13px;font:inherit;font-size:14.5px;background:#fff;
+  }
+  input:focus,textarea:focus{outline:2px solid #eec491;border-color:transparent}
+  .submit{
+    margin-top:24px;width:100%;border:none;cursor:pointer;padding:14px;border-radius:999px;
+    background:var(--accent);color:#fff;font-weight:800;font-size:15px;letter-spacing:.06em;
+  }
+  .submit:hover{background:#b55f24}
+  .tel{text-align:center;margin-top:18px;font-size:13.5px;color:var(--sub)}
+  .tel b{color:var(--ink);font-size:16px}
+
+  footer{padding:34px 0 40px;text-align:center;color:var(--sub);font-size:12.5px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap top-in">
+    <div class="logo">
+      <svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true">
+        <ellipse cx="24" cy="29" rx="16" ry="11" fill="#e8a558"/>
+        <path d="M10 26c4-6 24-6 28 0" stroke="#b35c2e" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <path d="M16 21c2-3 5-3 7 0M25 20c2-3 5-3 7 0" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".8"/>
+      </svg>
+      Bakery Aoi
+    </div>
+    <nav>
+      <a href="#about">こだわり</a>
+      <a href="#menu">メニュー</a>
+      <a href="#info">店舗情報</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap hero-in">
+    <div>
+      <div class="kicker">BAKERY &amp; CAFE</div>
+      <h1>焼きたての香りで、<br>一日をはじめよう。</h1>
+      <p>毎朝5時から仕込む、国産小麦のパンと自家焙煎コーヒー。駅から徒歩3分、焼きたての香りが目印の小さなお店です。</p>
+      <div class="btns">
+        <a class="btn" href="#menu">メニューを見る</a>
+        <a class="btn ghost" href="#info">アクセス</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <svg width="300" height="240" viewBox="0 0 300 240">
+        <ellipse cx="150" cy="196" rx="118" ry="16" fill="rgba(120,60,10,.18)"/>
+        <g>
+          <path d="M62 150c0-34 40-58 88-58s88 24 88 58c0 10-8 16-18 16H80c-10 0-18-6-18-16z" fill="#f7d9a8"/>
+          <path d="M62 150c0-34 40-58 88-58s88 24 88 58" fill="none" stroke="#d98e3e" stroke-width="5"/>
+          <path d="M104 118l14 14M136 106l14 14M168 106l14 14M200 118l12 12" stroke="#c97a2e" stroke-width="6" stroke-linecap="round"/>
+          <rect x="52" y="164" width="196" height="12" rx="6" fill="#a8642a"/>
+        </g>
+        <g stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".85" fill="none">
+          <path d="M96 66c-6-10 6-14 0-24"/><path d="M150 60c-6-10 6-14 0-24"/><path d="M204 66c-6-10 6-14 0-24"/>
+        </g>
+        <circle cx="252" cy="52" r="20" fill="#fff3d6"/>
+        <circle cx="252" cy="52" r="30" fill="none" stroke="#fff3d6" stroke-width="3" opacity=".5"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="en">OUR PROMISE</div>
+      <h2>3つのこだわり</h2>
+      <p>小さなお店だからこそ、手を抜かないことを決めています。</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="ic">🌾</div>
+        <h3>国産小麦と天然酵母</h3>
+        <p>北海道産小麦を中心に、その日の気温と湿度で配合を調整。天然酵母でゆっくり発酵させ、小麦本来の甘みを引き出します。</p>
+      </div>
+      <div class="about-card">
+        <div class="ic">🔥</div>
+        <h3>毎朝、店内で焼き上げ</h3>
+        <p>パンはすべて店内の工房で、当日分だけを焼きます。焼き上がりは7時・10時・14時の3回。売り切れ次第終了です。</p>
+      </div>
+      <div class="about-card">
+        <div class="ic">☕</div>
+        <h3>自家焙煎コーヒー</h3>
+        <p>豆は店主が少量ずつ焙煎し、パンに合う中深煎りに。店内8席のカフェスペースで、焼きたてと一緒にどうぞ。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="menu" class="menu-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="en">MENU</div>
+      <h2>メニュー</h2>
+      <p>定番から季節限定まで、常時20種類ほどをご用意しています。</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-item"><div><span class="name">Aoi食パン</span><span class="desc">湯種製法のもっちり食パン（1斤）</span></div><span class="dots"></span><span class="price">¥680</span></div>
+      <div class="menu-item"><div><span class="name">クロワッサン</span> <span class="tag">人気</span><span class="desc">発酵バターを27層に折り込み</span></div><span class="dots"></span><span class="price">¥300</span></div>
+      <div class="menu-item"><div><span class="name">あんバターサンド</span><span class="desc">十勝産あんこと有塩バター</span></div><span class="dots"></span><span class="price">¥340</span></div>
+      <div class="menu-item"><div><span class="name">季節のデニッシュ</span><span class="desc">今月は洋梨とカスタード</span></div><span class="dots"></span><span class="price">¥380</span></div>
+      <div class="menu-item"><div><span class="name">カレーパン</span><span class="desc">自家製キーマカレーを包んで揚げたて</span></div><span class="dots"></span><span class="price">¥320</span></div>
+      <div class="menu-item"><div><span class="name">ブレンドコーヒー</span><span class="desc">自家焙煎・中深煎り（Hot / Ice）</span></div><span class="dots"></span><span class="price">¥450</span></div>
+      <div class="menu-item"><div><span class="name">カフェラテ</span><span class="desc">地元牧場の低温殺菌ミルク使用</span></div><span class="dots"></span><span class="price">¥520</span></div>
+      <div class="menu-item"><div><span class="name">モーニングセット</span> <span class="tag">〜10時</span><span class="desc">トースト＋ゆで卵＋ドリンク</span></div><span class="dots"></span><span class="price">¥750</span></div>
+    </div>
+    <p class="menu-note">※ 価格は税込です。アレルギー表示は店頭でご確認ください。</p>
+  </div>
+</section>
+
+<section id="info">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="en">SHOP INFO</div>
+      <h2>店舗情報・アクセス</h2>
+    </div>
+    <div class="info-grid">
+      <div class="info-card">
+        <h3>Bakery Aoi</h3>
+        <table class="info">
+          <tr><th>住所</th><td>〒000-0000<br>サンプル県サンプル市青葉町1-2-3</td></tr>
+          <tr><th>営業時間</th><td>7:00〜18:00（売り切れ次第閉店）<br>カフェは17:00まで</td></tr>
+          <tr><th>定休日</th><td>月曜日・第3火曜日</td></tr>
+          <tr><th>電話</th><td>000-0000-0000</td></tr>
+          <tr><th>アクセス</th><td>青葉駅 東口から徒歩3分<br>駐車場2台あり</td></tr>
+          <tr><th>お支払い</th><td>現金 / クレジットカード / 電子マネー</td></tr>
+        </table>
+      </div>
+      <div class="map" aria-label="アクセスマップ（イメージ）">
+        <div class="river"></div>
+        <div class="road"></div>
+        <div class="pin">Bakery Aoi</div>
+        <span class="st" style="left:12px;top:14px">青葉駅</span>
+        <span class="st" style="right:14px;bottom:14px">青葉川</span>
+        <span class="st" style="left:14px;bottom:14px">青葉町商店街</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-sec">
+  <div class="wrap">
+    <div class="contact-box">
+      <h2>お問い合わせ</h2>
+      <p class="lead">パンのご予約・取材・イベント出店のご相談など、お気軽にどうぞ。</p>
+      <form onsubmit="event.preventDefault();document.getElementById('done').style.display='block';this.reset();">
+        <label for="name">お名前</label>
+        <input id="name" type="text" placeholder="山田 花子" required>
+        <label for="mail">メールアドレス</label>
+        <input id="mail" type="email" placeholder="example@mail.jp" required>
+        <label for="msg">お問い合わせ内容</label>
+        <textarea id="msg" rows="4" placeholder="ご予約の場合は、商品名・個数・受け取り日時をご記入ください" required></textarea>
+        <button class="submit" type="submit">送信する</button>
+        <p id="done" style="display:none;text-align:center;margin-top:14px;color:#8a5a33;font-size:13.5px;font-weight:700">ありがとうございます。送信を受け付けました（サンプルのため実際には送信されません）。</p>
+      </form>
+      <p class="tel">お電話でもどうぞ　<b>000-0000-0000</b>（営業時間内）</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© Bakery Aoi</p>
+    <p>※これは制作サンプルです。実在の店舗ではありません。</p>
+  </div>
+</footer>
+
+</body>
+</html>
